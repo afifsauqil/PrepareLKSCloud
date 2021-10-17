@@ -1,0 +1,563 @@
+Tugas 1: Membuat Bucket
+Anda baru mengenal Amazon S3 dan ingin menguji fitur dan keamanan S3 saat Anda mengonfigurasi lingkungan untuk menyimpan data laporan EC2. Anda tahu bahwa setiap objek di Amazon S3 disimpan dalam bucket sehingga menciptakan bucket baru untuk menyimpan laporan adalah hal pertama pada daftar tugas Anda.
+
+Dalam tugas ini, Anda membuat bucket untuk menyimpan data laporan EC2 dan kemudian memeriksa opsi konfigurasi bucket yang berbeda.
+
+Di kiri atas AWS Management Console, pada menu Services (Layanan),  pilih S3.
+ Anda juga dapat mencari S3 di bagian atas menu layanan.
+
+Pilih Create bucket (Buat bucket)
+ Nama bucket harus antara 3 hingga 63 karakter dan hanya dapat berisi huruf kecil, angka, atau tanda hubung. Nama bucket juga harus unik secara global di seluruh Amazon S3, terlepas dari akun atau wilayah, dan tidak dapat diubah setelah bucket dibuat. Saat Anda memasukkan nama bucket, kotak bantuan akan menampilkan pelanggaran aturan penamaan. Lihat aturan penamaan bucket Amazon S3 di bagian Additional resources (Sumber daya tambahan) di akhir lab untuk informasi lebih lanjut.
+
+Di bagian General configuration (Konfigurasi umum), beri nama bucket Anda: 
+reportbucket(NOMOR)
+ Ganti NOMOR dalam nama bucket dengan nomor acak. Hal ini memastikan bahwa Anda memiliki nama yang unik.
+
+Contoh Nama Bucket - 
+reportbucket987987
+Biarkan Region (Wilayah) terisi wilayah default.
+ Memilih wilayah tertentu memungkinkan Anda mengoptimalkan latensi, meminimalkan biaya, atau memenuhi persyaratan regulasi. Objek yang disimpan di suatu wilayah tidak akan pernah meninggalkan wilayah itu, kecuali jika Anda mentransfernya ke wilayah lain secara eksplisit.
+
+Gulir ke bawah dan pilih Create bucket (Buat bucket).
+Tugas 2: Mengunggah objek ke bucket
+Sekarang setelah membuat bucket untuk data laporan, Anda siap untuk bekerja dengan objek. Objek dapat berupa segala jenis file: file teks, foto, video, file zip, dan sebagainya. Ketika menambahkan objek ke Amazon S3, Anda memiliki opsi untuk menyertakan metadata dengan objek, dan mengatur izin untuk mengontrol akses ke objek.
+
+Dalam tugas ini, Anda menguji pengunggahan objek ke reportbucket Anda. Anda memiliki tangkapan layar dari laporan harian dan ingin mengunggah gambar ini ke bucket S3 Anda.
+
+Klik kanan tautan ini new-report.png, pilih Save link as (Simpan tautan sebagai), dan simpan file secara lokal.
+
+Di S3 Management Console (Konsol Manajemen S3), temukan dan pilih bucket yang dimulai dengan nama reportbucket.
+
+Pilih Upload (Unggah)
+
+Tindakan ini meluncurkan wizard pengunggahan. Gunakan wizard ini untuk mengunggah file, baik dengan memilihnya dari pemilih file, atau dengan menyeretnya ke jendela S3.
+
+Pilih Add files (Tambah file)
+
+Jelajahi dan pilih file new-report.png yang telah Anda unduh sebelumnya.
+
+Gulir ke bawah dan pilih Upload (Unggah)
+
+File Anda berhasil diunggah ketika bar hijau menunjukkan Upload succeeded (Unggah berhasil) muncul.
+
+ Jika file tidak ditampilkan di bucket dalam beberapa detik setelah diunggah, Anda mungkin perlu mengeklik tombol  refresh di sudut kanan atas.
+
+Di bagian Upload: status (Unggah: status), pilih Close (Tutup).
+Tugas 3: Menjadikan objek publik
+Keamanan adalah prioritas di Amazon S3. Sebelum Anda mengonfigurasi instans EC2 untuk terhubung ke reportbucket, Anda ingin menguji pengaturan bucket dan objek untuk keamanan.
+
+Dalam tugas ini, Anda mengonfigurasi izin pada bucket dan objek Anda untuk menguji aksesibilitas.
+
+Pertama, Anda mencoba mengakses objek untuk mengonfirmasi bahwa objek tersebut privat secara default.
+
+Di halaman ikhtisar reportbucket, pada tab objek, temukan objek new-report.png, dan pilih nama file new-report.png.
+Halaman ikhtisar new-report.png terbuka. Perhatikan bahwa navigasi di pembaruan kiri atas dengan tautan untuk kembali ke halaman ikhtisar bucket.
+
+Di bagian Object overview (Ikhtisar objek), temukan dan salin tautan Object URL (URL Object).
+Tautan seharusnya terlihat seperti: https://reportbucket987987.s3-us-west-2.amazonaws.com/new-report.png
+
+Buka tab browser baru dan tempel tautan URL Objek ke bidang alamat, dan kemudian tekan Enter.
+Anda menerima kesalahan Access Denied (Akses Ditolak). Hal ini karena objek di Amazon S3 secara default bersifat privat.
+
+Sekarang setelah Anda mengonfirmasi keamanan default S3 bersifat pribadi, Anda ingin menguji bagaimana membuat objek dapat diakses publik.
+
+Biarkan browser dengan kesalahan Access Denied (Akses Ditolak) terbuka dan kembali ke tab browser web dengan S3 Management Console (Konsol Manajemen S3).
+
+Seharusnya Anda masih berada di tab Ikhtisar objek new-report.png.
+
+Pilih tombol Object actions (Tindakan objek) dan Make public (Jadikan publik), yang akan menjadi item terakhir dalam daftar.
+
+ Perhatikan peringatan Akses Public access is blocked because Block Public Access settings are turned on for this bucket (Akses publik diblokir karena pengaturan Blokir Akses Publik diaktifkan untuk bucket ini. Kesalahan ini muncul karena bucket ini dikonfigurasi untuk tidak mengizinkan akses publik. Pengaturan bucket menggantikan setiap izin yang diterapkan ke objek individu. Jika Anda ingin objek dapat dilihat oleh publik umum, Anda harus menonaktifkan Blokir Akses Publik (BPA).
+
+Pilih Make public (Jadikan publik) dan baca peringatan di bagian atas jendela yang menunjukkan “Failed to edit public access” (Gagal mengedit akses publik) lagi ini karena BPA diaktifkan.
+
+Pilih Close (Tutup) untuk kembali ke ikhtisar objek.
+
+Gunakan navigasi di bagian atas untuk kembali ke halaman ikhtisar laporan reportbucket.
+
+Pilih tab Permissions (Izin).
+
+Dalam Block public access (bucket settings) (Blokir akses publik (pengaturan bucket)), pilih Edit untuk mengubah pengaturan.
+
+Hapus pilihan Block all public access (Blokir semua akses publik), dan kemudian biarkan semua pilihan lain tidak dipilih.
+
+Perhatikan bahwa semua opsi individu tetap tidak dipilih. Ketika membatalkan pilihan semua akses publik, kemudian Anda harus memilih opsi individu yang berlaku untuk situasi dan tujuan keamanan Anda. Baik ACL dan kebijakan bucket digunakan kemudian di laboratorium, sehingga semuanya tetap tidak dipilih dalam tugas ini. Dalam lingkungan produksi, dianjurkan untuk menggunakan pengaturan yang paling tidak permisif. Lihat tautan blokir akses publik Amazon S3 di bagian Additional Resources (Sumber Daya Tambahan) di akhir lab untuk informasi lebih lanjut.
+
+Pilih Save changes (Simpan perubahan)
+
+Kotak dialog terbuka meminta Anda mengonfirmasi perubahan. Ketik 
+confirm
+ di bidang tersebut dan kemudian pilih Confirm (Konfirmasi)
+
+ Pesan Successfully edited bucket settings for Block Public Access (Berhasil mengedit pengaturan bucket untuk Blokir Akses Publik) ditampilkan di bagian atas jendela.
+
+Pilih tab Object (Objek).
+
+Pilih nama file new-report.png.
+
+Pada halaman ikhtisar new-report.png, pilih tombol Object actions (Tindakan objek) dan pilih Make public (Jadikan publik).
+
+ Perhatikan peringatan: When public read access is enabled and not blocked by Block Public Access settings, anyone in the world can access the specified objects (Jika akses baca publik diaktifkan dan tidak diblokir oleh pengaturan Blokir Akses Publik, siapa pun di dunia dapat mengakses objek tertentu). Ini dirancang untuk mengingatkan Anda bahwa jika Anda membuat objek menjadi publik, semua orang di dunia akan dapat membaca objek.
+
+Pilih Make public (Jadikan publik) dan Anda akan melihat banner hijau Successfully edited public access (Berhasil mengedit akses publik) di bagian atas jendela.
+
+Pilih Close (Tutup) untuk kembali ke ikhtisar objek.
+
+Kembali ke tab browser lain yang menampilkan Access Denied (Akses Ditolak) untuk new-report.png dan refresh  halaman.
+
+new-report
+
+ new-report.png sekarang ditampilkan dengan benar karena dapat diakses oleh publik.
+
+Tutup tab browser web yang menampilkan gambar new-report.png Anda dan kembali ke tab dengan Konsol Manajemen Amazon S3.
+Dalam contoh ini, Anda diberikan akses baca hanya untuk satu objek tertentu. Jika Anda ingin memberikan akses ke seluruh bucket, Anda harus menggunakan kebijakan bucket, yang nanti akan dibahas di lab ini.
+
+Pada tugas berikutnya, Anda bekerja dengan instans EC2 untuk mengonfirmasi konektivitas ke bucket S3.
+
+Tugas 4: Menguji konektivitas dari instans EC2
+Dalam tugas ini, Anda terhubung ke instans Amazon Elastic Compute Cloud (Amazon EC2) untuk menguji konektivitas dan keamanan untuk reportbucket S3.
+
+Anda harus sudah masuk ke AWS Management Console. Jika tidak, ikuti langkah-langkah di bagian Mulai Lab untuk masuk ke AWS Management Console.
+
+Dari menu Services (Layanan), pilih EC2.
+
+Di EC2 Dashboard (Dasbor EC2), di bagian Resources (Sumber Daya), pilih Instances (running) (Instans (berjalan)).
+
+Pilih  Bastion Host (Host Bastion) dan pilih Connect (Sambungkan)
+
+Di jendela Connect to instance (Sambungkan ke instans):
+
+Untuk Metode koneksi, pilih Session Manager (Manajer Sesi).
+ Manajer sesi memungkinkan Anda terhubung ke instans host bastion tanpa perlu membuka port tertentu pada firewall atau grup keamanan Amazon Cloud Privat Virtual (Amazon VPC). Lihat Manajer Sesi AWS Systems Manager di bagian Additional resources (Sumber daya tambahan) di akhir laboratorium ini untuk informasi lebih lanjut.
+
+Pilih Connect (Sambungkan).
+Sebuah tab browser baru atau jendela terbuka dengan koneksi ke instans host bastion.
+
+ Anda sekarang terhubung ke instans EC2 yang menyimpan aplikasi pelaporan. Karena Manajer Sesi menggunakan https port 443, Anda tidak diharuskan untuk membuka port SSH 22 ke dunia luar, Anda puas dengan fitur keamanan ini. Sekarang Anda ingin melihat bagaimana EC2 berinteraksi dengan bucket S3 Anda.
+
+ Dalam sesi host bastion, masukkan perintah berikut untuk mengubah ke direktori beranda (/home/ssm-user/):
+
+cd ~
+ Output mengembalikan Anda ke command prompt.
+
+ Masukkan perintah berikut untuk memverifikasi bahwa Anda berada di direktori beranda:
+
+pwd
+ Output seharusnya:
+
+
+/home/ssm-user
+Anda sekarang berada di direktori beranda ssm-user tempat Anda akan menjalankan semua perintah di lab ini.
+
+ Masukkan perintah berikut untuk mencantumkan semua bucket S3 Anda.
+
+aws s3 ls
+ Output seharusnya terlihat seperti ini:
+
+
+2020-11-11 22:27:28 ql-cf-templates-1603924046-5d95cf473a39fe4e-us-west-2
+2020-11-11 22:27:49 qltrail-lab-59350-1603924067
+2020-11-11 22:34:46 reportbucket987987
+Anda melihat reportbucket yang Anda buat serta bucket yang dihasilkan otomatis di lab.
+
+ Catatan: Selama pembuatan lingkungan laboratorium, baik Profil Instans (yang mendefinisikan siapa Anda untuk autentikasi) dan Peran (yang mendefinisikan apa yang dapat Anda lakukan setelah Anda melakukan autentikasi), telah ditambahkan secara otomatis untuk instans EC2 untuk memungkinkan instans EC2 mencantumkan bucket dan objek S3.
+
+ Masukkan perintah berikut untuk mencantumkan semua objek dalam reportbucket Anda. Ingatlah untuk mengubah nomor di akhir nama reportbucket, untuk mencocokkan nama bucket yang Anda buat.
+
+aws s3 ls s3://reportbucket(NUMBER)
+Perintah terlihat seperti ini: aws s3 ls s3://reportbucket987987
+
+ Outputnya akan terlihat seperti ini:
+
+
+2020-11-11 15:46:34      86065 new-report.png
+Saat ini hanya ada satu objek dalam bucket Anda yang disebut new-report.png.
+
+Ketik berikut ini untuk mengubah direktori menjadi direktori laporan.
+
+cd reports
+ Output mengembalikan Anda ke command prompt.
+
+Ketik berikut untuk mencantumkan isi direktori.
+
+ls
+ Output menunjukkan beberapa file yang dibuat di direktori laporan Anda untuk menguji aplikasi.
+
+
+dolphins.jpg files.zip report-test.txt  report-test1.txt report-test2.txt report-test3.txt  whale.jpg
+Ketik berikut ini untuk melihat apakah Anda dapat menyalin file ke bucket S3.
+
+aws s3 cp report-test1.txt s3://reportbucket(NUMBER)
+Perintah terlihat seperti ini: aws s3 cp report-test1.txt s3: //reportbucket987987
+
+ Output menunjukkan kesalahan upload failed (unggahan gagal). Hal ini karena kita memiliki hak hanya baca untuk bucket dan tidak memiliki izin untuk melakukan operasi PutObject.
+
+Biarkan jendela ini terbuka dan kembali ke tab Konsol AWS.
+Dalam tugas berikutnya Anda membuat kebijakan bucket untuk menambahkan PutOperation.
+
+Tugas 5: Membuat kebijakan bucket
+Kebijakan bucket adalah seperangkat izin yang terkait dengan bucket S3. Kebijakan ini digunakan untuk mengontrol akses ke seluruh bucket, atau ke direktori tertentu di dalam bucket.
+
+Dalam tugas ini, Anda menggunakan AWS Policy Generator untuk membuat kebijakan bucket dan mengaktifkan akses baca dan tulis dari instans EC2 ke bucket untuk memastikan aplikasi pelaporan Anda berhasil menulis ke S3.
+
+Klik kanan tautan ini sample-file.txt, pilih Save link as (Simpan tautan sebagai), dan simpan file secara lokal.
+
+Kembali ke AWS Management Console, buka menu Services (Layanan) dan pilih S3.
+
+Di tab S3 Management Console (Konsol Manajemen S3), pilih nama bucket Anda.
+
+Pilih Upload (Unggah) dan gunakan proses pengunggahan yang sama seperti pada tugas sebelumnya untuk mengunggah sample-file.txt.
+
+Pilih nama file sample-file.txt. Halaman ikhtisar sample-file.txt terbuka.
+
+Di bagian Object overview (Ikhtisar objek), temukan dan salin tautan Object URL (URL Objek).
+
+Buka tab browser web baru, tempel tautan ke bidang alamat, lalu tekan Enter.
+
+Sekali lagi, Access Denied (Akses Ditolak) akan ditampilkan. Sekarang, Anda perlu mengonfigurasi kebijakan bucket untuk memberikan akses ke semua objek di bucket, tanpa harus menentukan izin pada setiap objek satu demi satu.
+
+Biarkan tab browser ini tetap terbuka, tetapi kembali ke tab browser web dengan S3 Management Console (Konsol Manajemen S3).
+
+Buka Services (Layanan)  > IAM > Roles (Peran).
+
+Di bidang Pencarian, ketikkan EC2InstanceProfileRole. Ini adalah Peran yang menggunakan instans EC2 untuk terhubung ke S3.
+
+Pilih EC2InstanceProfileRole. Pada halaman Ringkasan, salin Role ARN (ARN Peran) ke file teks untuk digunakan dalam langkah berikutnya.
+
+Tampilannya terlihat seperti ini: arn:aws:iam::596123517671:role/EC2InstanceProfileRole
+
+Pilih Services (Layanan) , S3, dan kembali ke S3 Management Console (Konsol Manajemen S3).
+
+Pilih reportbucket.
+
+Anda akan melihat dua objek yang Anda unggah. Jika tidak, kembali ke bucket Anda, sehingga Anda dapat melihat daftar objek yang telah diunggah.
+
+Pilih tab Permissions (Izin).
+
+Di tab Permission (Izin), gulir ke bagian Bucket Policy (Kebijakan Bucket), pilih Edit
+
+Bucket policy editor (Editor kebijakan bucket) yang kosong ditampilkan. Kebijakan bucket dapat dibuat secara manual, atau dapat dibuat dengan bantuan AWS Policy Generator.
+
+ Nama Sumber Daya Amazon (ARN) mengidentifikasi sumber daya AWS di seluruh AWS dengan unik. Setiap bagian dari ARN dipisahkan oleh “:” dan mewakili bagian tertentu dari jalur ke sumber daya yang ditentukan. Bagiannya dapat sedikit berbeda bergantung pada layanan yang direferensikan, tetapi umumnya mengikuti format ini:
+
+arn:partition:service:region:account-id:resource
+
+Amazon S3 tidak memerlukan parameter wilayah atau account-id di ARN, sehingga bagian tersebut dibiarkan kosong. Namun, “:” untuk memisahkan bagian masih digunakan, sehingga terlihat seperti arn:aws:s3:::reportbucket987987
+
+Lihat tautan dokumentasi Amazon Resource Name (ARN) dan AWS Service Namespaces di bagian Sumber Daya Tambahan di akhir lab untuk informasi lebih lanjut.
+
+Salin ARN Bucket ke file teks yang akan digunakan di langkah selanjutnya.
+Hal ini ditampilkan di bawah tombol Policy examples (Contoh kebijakan) danPolicy generator (Pembuat kebijakan).
+
+Tampilannya terlihat seperti ini:
+
+
+Bucket ARN
+arn:aws:s3:::reportbucket987987
+Pilih Policy generator (Pembuat kebijakan)
+Tab browser web yang baru akan terbuka dengan AWS Policy Generator.
+
+ Kebijakan AWS menggunakan format JSON, dan digunakan untuk mengonfigurasi izin granular untuk layanan AWS. Meskipun Anda dapat menulis kebijakan di JSON secara manual, AWS Policy Generator memungkinkan Anda membuatnya menggunakan antarmuka web yang ramah.
+
+Di jendela AWS Policy Generator:
+
+Untuk Select Type of Policy (Pilih Jenis Kebijakan), pilih S3 Bucket Policy (Kebijakan Bucket S3).
+Untuk Effect (Efek), pilih Allow (Izinkan).
+Untuk Principal (Prinsip), tempel ARN Peran EC2 yang Anda salin ke file teks pada langkah sebelumnya.
+Untuk AWS Service (Layanan AWS), biarkan pengaturan default Amazon S3.
+Untuk Actions (Tindakan), pilih PutObject dan GetObject
+ Tindakan GetObject memberikan izin untuk objek yang akan diambil dari Amazon S3. Lihat bagian Sumber Daya Tambahan di akhir lab untuk mendapatkan tautan ke informasi lebih lanjut tentang tindakan yang tersedia untuk digunakan dalam kebijakan Amazon S3.
+
+Amazon Resource Name (ARN): Tempelkan ARN yang sebelumnya disalin.
+Di akhir ARN, tambahkan 
+/*
+Seharusnya ARN terlihat seperti: arn:aws:s3:::reportbucket987987/*
+
+ Amazon Resource Name (ARN) adalah cara standar untuk merujuk ke sumber daya dalam AWS. Dalam hal ini, ARN mengacu pada bucket S3 Anda. Ketika Anda menambahkan /* di akhir nama bucket, kebijakan dapat diterapkan ke semua objek di dalam bucket.
+
+Pilih Add Statement (Tambahkan Pernyataan). Detail pernyataan yang Anda konfigurasi ditambahkan ke tabel di bawah tombol. Anda dapat menambahkan beberapa pernyataan kebijakan.
+
+Pilih Generate Policy (Buat Kebijakan).
+
+Sebuah jendela baru muncul dan menunjukkan kebijakan yang dihasilkan dalam format JSON. Kebijakan seharusnya terlihat seperti:
+
+
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1604361694227",
+    "Statement": [
+        {
+            "Sid": "Stmt1604361692117",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::416159072693:role/EC2InstanceProfileRole"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::reportbucket987987/*"
+        }
+    ]
+}
+ Konfirmasi bahwa 
+/*
+ muncul setelah nama bucket Anda seperti yang ditunjukkan pada baris Resource dalam sampel di atas.
+
+Salin kebijakan yang Anda buat ke papan klip.
+
+Tutup tab browser web dan kembali ke tab dengan Editor kebijakan bucket.
+
+Tempelkan kebijakan bucket yang Anda buat ke Bucket policy editor (Editor kebijakan bucket).
+
+Pilih Save changes (Simpan perubahan)
+
+Kembali ke jendela AWS Systems Manager (SSM). Jika sesi Anda telah habis, sambungkan kembali ke SSM menggunakan langkah-langkah sebelumnya di lab.
+
+Ketik berikut ini untuk memverifikasi bahwa Anda berada di direktori /home/ssm-user/reports.
+
+
+pwd
+ Output seharusnya:
+
+
+/home/ssm-user/reports
+ Masukkan perintah berikut untuk mencantumkan semua objek dalam reportbucket Anda. Ganti NOMOR dengan nomor yang Anda gunakan untuk membuat bucket Anda.
+
+aws s3 ls s3://reportbucket(NUMBER)
+Perintah seharusnya terlihat seperti ini: aws s3 ls s3://reportbucket987987
+
+ Output seharusnya terlihat seperti ini:
+
+
+sh-4.2$ aws s3 ls s3://reportbucket987987
+2020-11-02 23:20:27      86065 new-report.png
+2020-11-02 23:57:03         90 sample-file.txt
+Ketik berikut ini untuk mencantumkan isi direktori laporan.
+
+ls
+ Output mengembalikan daftar file.
+
+Ketik berikut ini untuk mencoba mengatasi file report-test1.txt ke bucket s3.
+
+aws s3 cp report-test1.txt s3://reportbucket(NUMBER)
+Perintah seharusnya terlihat seperti ini: aws s3 cp report-test1.txt s3://reportbucket987987
+
+ Output mengembalikan berikut ini:
+
+
+upload: ./report-test1.txt to s3://reportbucket987987/report-test1.txt
+Ketik berikut ini untuk melihat apakah file berhasil diunggah ke S3.
+
+aws s3 ls s3://reportbucket(NUMBER)
+ Output seharusnya terlihat seperti ini:
+
+
+2020-11-11 18:20:23      86065 new-report.png
+2020-11-11 18:32:18         31 report-test1.txt
+2020-11-11 18:20:22         90 sample-file.txt
+Anda telah berhasil mengunggah (putObject) file dari instans EC2 ke bucket S3 Anda.
+
+Sekarang ketik perintah berikut untuk mengambil (GetObject) file dari S3 ke Instans EC2.
+
+aws s3 cp s3://reportbucket(NUMBER)/sample-file.txt sample-file.txt
+ Output seharusnya terlihat seperti ini:
+
+
+download: s3://reportbucket987987/sample-file.txt to ./sample-file.txt
+Ketik berikut untuk melihat apakah file sekarang berada sdi direktori /reports.
+
+ls
+ Output seharusnya terlihat seperti ini:
+
+
+dolphins.jpg  files.zip  report-test1.txt  report-test2.txt  report-test3.txt  sample-file.txt
+Anda sekarang melihat sample-file.txt dalam daftar file Anda. Selamat! Anda berhasil mengunggah dan mengambil file dari EC2 ke bucket S3.
+
+Kembali ke tab browser yang menampilkan Access Denied (Akses Ditolak) untuk sample-file.txt dan refresh  halaman.
+Halaman masih menampilkan pesan kesalahan karena Kebijakan Bucket hanya memberikan hak untuk prinsip yang disebut EC2InstanceProfileRole.
+
+Selanjutnya, kembali ke pembuat kebijakan dan tambahkan pernyataan lain untuk kebijakan bucket yang memungkinkan SEMUA ORANG (*), Akses baca (GetObject). Luangkan waktu untuk membuat kebijakan ini yang memungkinkan kedua EC2InstanceProfileRole memiliki akses ke bucket sekaligus memberikan akses ke SEMUA ORANG untuk membaca objek melalui browser.
+
+Untuk menguji apakah kebijakan Anda bekerja, buka browser dengan kesalahan Akses Ditolak dan refresh. Jika Anda bisa membaca teksnya, selamat! Kebijakan Anda berhasil.
+
+ Jika tidak, lihat kebijakan di bawah ini untuk mendapatkan bantuan. Kebijakan yang dimodifikasi akan terlihat seperti kebijakan yang tercantum di bawah ini. Perhatikan bahwa ada dua pernyataan, satu dengan EC2InstanceProfileRole dan satu di mana Principal adalah “*” untuk semua orang.
+
+Jika Anda mengalami kesulitan menghasilkan kebijakan sendiri, Anda dapat menyalin kebijakan di bawah ini dan menempelkannya ke Editor Kebijakan Bucket. Jangan lupa mengganti ARN EC2InstanceProfileRole yang ada dalam kebijakan di bawah ini dengan ARN EC2InstanceProfileRole yang Anda salin pada langkah sebelumnya. Pastikan bahwa /* muncul di akhir ARN Bucket. Lihat baris terakhir file sebagai contoh.
+
+
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1604428844058",
+    "Statement": [
+        {
+            "Sid": "Stmt1604428821481",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::285058481724:role/EC2InstanceProfileRole"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::reportbucket987987/*"
+        },
+        {
+            "Sid": "Stmt1604428842806",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::reportbucket987987/*"
+        }
+    ]
+}
+Biarkan tab terbuka dengan menampilkan sample-file.txt. Anda akan kembali ke tab ini dalam tugas berikutnya.
+Dalam tugas ini, Anda membuat kebijakan bucket untuk mengizinkan hak akses tertentu ke bucket Anda. Pada bagian berikutnya Anda menjelajahi cara menyimpan salinan file untuk mencegah penghapusan yang tidak disengaja.
+
+Tugas 6: Menjelajahi versioning
+Versioning adalah sarana untuk menyimpan beberapa varian objek di bucket yang sama. Anda dapat menggunakan versioning untuk mempertahankan, mengambil, dan memulihkan setiap versi pada setiap objek yang disimpan di bucket Amazon S3 Anda. Dengan versioning, Anda dapat melakukan pemulihan dengan mudah dari tindakan pengguna yang tidak disengaja atau kegagalan aplikasi.
+
+Untuk alasan audit dan kepatuhan, Anda harus mengaktifkan versioning pada reportbucket Anda. Versioning akan melindungi laporan di reportbucket dari penghapusan yang tidak disengaja. Anda ingin tahu apakah ini bekerja seperti yang diiklankan. Dalam tugas ini, Anda mengaktifkan versioning dan menguji fitur dengan mengunggah versi modifikasi file sample-file.txt dari tugas sebelumnya.
+
+Anda harus berada di tab Izin bucket S3 dari tugas sebelumnya. Jika tidak, pilih tautan ke bucket di bagian kiri atas layar untuk kembali ke halaman Ikhtisar bucket.
+
+Pada halaman ikhtisar reportbucket, pilih tab Properties (Properti).
+
+Di bagian Bucket Versioning (Versioning Bucket), pilih Edit
+
+Pilih  Enable (Aktifkan), lalu pilih Save changes (Simpan perubahan)
+
+ Versioning diaktifkan untuk seluruh bucket dan semua objek dalam bucket. Versioning ini tidak dapat diaktifkan untuk objek individu.
+
+ Biaya juga menjadi pertimbangan saat mengaktifkan versioning. Lihat bagian Sumber Daya Tambahan di bagian akhir lab untuk mendapatkan tautan ke informasi lebih lanjut.
+
+Klik kanan tautan ini dan simpan file teks ke komputer Anda menggunakan nama yang sama dengan file teks pada tugas sebelumnya: sample-file.txt.
+ Meskipun file ini memiliki nama yang sama dengan file sebelumnya, file ini berisi teks baru.
+
+Di Konsol Manajemen S3, pada reportbucket, pilih tab Object (Objek).
+Di bagian Object (Objek), cari  Daftar versi.
+
+Pilih Upload (Unggah) dan gunakan proses pengunggahan yang sama di tugas sebelumnya untuk mengunggah file sample-file.txt baru.
+
+Buka tab browser yang berisi file sample-file.txt.
+
+Buat catatan konten pada halaman, lalu refresh  halaman.
+
+Perhatikan baris teks baru yang muncul.
+
+ Amazon S3 selalu mengembalikan versi terbaru dari suatu objek, jika versi tidak ditentukan lain.
+
+Anda juga dapat memperoleh daftar versi yang tersedia di Konsol Manajemen S3.
+
+Tutup tab browser web yang berisi file teks.
+
+Di Konsol Manajemen S3, pilih nama file sample-file.txt. Halaman ikhtisar sample-file.txt terbuka.
+
+Pilih tab Versions (Versi) dan kemudian pilih versi bawah yang berbunyi *null (Catatan: Ini bukan versi terbaru).
+
+Pilih Actions (Tindakan) dan pilih Open (Buka).
+
+Seharusnya sekarang Anda melihat versi asli file menggunakan Konsol Manajemen S3.
+
+ Namun, jika Anda mencoba mengakses versi lama file sample-file.txt menggunakan tautan URL objek, Anda akan menerima pesan akses ditolak. Hal ini sudah diantisipasi karena kebijakan bucket yang Anda buat dalam tugas sebelumnya hanya memungkinkan izin untuk mengakses versi terbaru objek. Untuk mengakses versi lama objek, Anda perlu memperbarui kebijakan bucket untuk menyertakan izin “s3:GetObjectVersion”. Berikut adalah contoh kebijakan bucket dengan tambahan tindakan “S3:GetObjectVersion” yang memungkinkan Anda mengakses versi lama menggunakan tautan. Anda tidak perlu memperbarui kebijakan bucket Anda dengan contoh ini untuk menyelesaikan lab ini. Anda dapat mencoba melakukan ini sendiri setelah menyelesaikan tugas.
+
+
+{
+  "Id": "Policy1557511288767",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1557511286634",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::mybucket45647467/*",
+      "Principal": "*"
+    }
+  ]
+}
+Kembali ke tab AWS Management Console dan pilih tautan untuk nama bucket di kiri atas untuk kembali ke tab Ikhtisar bucket.
+
+Cari  Opsi List versions (Daftar versi) dan alihkan tombol ke on (aktif)  untuk menampilkan versi.
+
+Sekarang Anda dapat melihat versi yang tersedia dari setiap objek dan mengidentifikasi versi mana yang terbaru. Perhatikan bahwa objek new-report.png hanya memiliki satu versi dan ID versi adalah null. Hal ini karena objek diunggah sebelum versioning diaktifkan pada bucket ini.
+
+Perhatikan juga bahwa Anda sekarang dapat memilih tautan nama versi untuk menavigasi langsung ke versi objek di konsol.
+
+Di samping List versions (Daftar versi), alihkan tombol ke off (nonaktif)  untuk kembali ke tampilan objek default.
+
+Pilih kotak centang di sebelah kiri sample-file.txt.
+
+Dengan objek yang dipilih, pilih Delete (Hapus)
+
+Jendela Delete objects (Hapus objek) muncul.
+
+Di bagian bawah, di bagian Delete objects? (Hapus objek?) Anda harus mengetik kata delete untuk mengonfirmasi penghapusan objek. Ketik delete dan pilih tombol Delete objects (Hapus objek).
+
+Pilih Close (Tutup) untuk kembali ke ikhtisar bucket.
+
+Objek sample-file.txt tidak lagi ditampilkan di bucket. Namun, jika objek tidak sengaja dihapus, versioning dapat digunakan untuk memulihkannya.
+
+Cari  Opsi List versions (Daftar versi) dan alihkan tombol ke on (aktif)  untuk menampilkan versi.
+Perhatikan bahwa objek sample-file.txt ditampilkan lagi, tetapi versi terbaru adalah Penanda hapus. Dua versi sebelumnya juga tercantum. Jika versioning telah diaktifkan pada bucket, objek tidak langsung dihapus. Sebaliknya, Amazon S3 menyisipkan penanda hapus, yang menjadi versi objek saat ini. Versi objek sebelumnya tidak dihapus. Lihat bagian Sumber Daya Tambahan di bagian akhir lab untuk mendapatkan tautan ke informasi lebih lanjut tentang versioning.
+
+Pilih kotak centang di sebelah kiri versi objek sample-file.txt dengan Delete marker (Penanda hapus).
+
+Dengan objek yang dipilih, pilih Delete (Hapus)
+
+Jendela Delete objects (Hapus objek) muncul.
+
+Di bawah di bagian Permanently delete objects? (Hapus objek secara permanen?) Anda harus mengetik kata permanently delete untuk mengonfirmasi penghapusan objek. Ketik permanently delete dan pilih tombol Delete objects (Hapus objek).
+
+Pilih Close (Tutup) untuk kembali ke ikhtisar bucket.
+
+Di samping List versions (Daftar versi), alihkan tombol ke off (nonaktif)  untuk kembali ke tampilan objek default.
+
+Perhatikan bahwa objek sample-file.txt telah dikembalikan ke bucket. Menghapus penanda hapus memulihkan objek ke keadaan sebelumnya secara efektif. Lihat bagian Sumber Daya Tambahan di akhir lab untuk mendapatkan tautan ke informasi lebih lanjut tentang membatalkan penghapusan objek S3.
+
+Selanjutnya, Anda menghapus versi tertentu objek.
+
+Untuk menghapus versi tertentu objek, cari  Opsi List versions (Daftar versi) dan alihkan tombol ke on (aktif)  untuk menampilkan versi.
+Anda akan melihat dua versi objek sample-file.txt.
+
+Pilih kotak centang di sebelah kiri versi terbaru objek sample-file.txt.
+
+Dengan objek yang dipilih, pilih Delete (Hapus).
+
+Jendela Delete objects (Hapus objek) muncul.
+
+Di bawah di bagian Permanently delete objects? (Hapus objek secara permanen?) ketikkan permanently delete dan pilih tombol Delete objects (Hapus objek).
+
+Pilih Close (Tutup) untuk kembali ke ikhtisar bucket.
+
+Perhatikan bahwa sekarang hanya ada satu versi file sample-file.txt. Saat menghapus versi tertentu dari sebuah objek, tidak ada penanda hapus yang dibuat. Objek dihapus secara permanen. Lihat bagian Sumber Daya Tambahan di akhir lab untuk mendapatkan tautan ke informasi lebih lanjut tentang menghapus versi objek di Amazon S3.
+
+Di samping List versions (Daftar versi), alihkan tombol ke off (nonaktif)  untuk kembali ke tampilan objek default.
+
+Pilih nama file sample-file.txt. Halaman ikhtisar sample-file.txt terbuka.
+
+Salin tautanObject URL (URL Objek) yang ditampilkan di bagian bawah jendela.
+
+Buka tab browser web baru, tempel tautan ke bidang alamat, lalu tekan Enter.
+
+Teks dari versi asli objek sample-file.txt ditampilkan.
+
+Ringkasan:
+Anda telah berhasil membuat bucket S3 untuk perusahaan Anda yang akan digunakan untuk menyimpan data laporan dari Instans EC2 Anda. Anda membuat kebijakan bucket untuk memungkinkan Instans EC2 PutObjects dan GetObject dari reportbucket dan Anda berhasil melakukan pengujian untuk mengunggah dan mengunduh file dari instans EC2 untuk menguji kebijakan bucket. Anda telah mengaktifkan versioning pada bucket S3 untuk melindungi dari penghapusan objek yang tidak disengaja. Anda telah berhasil menyelesaikan konfigurasi untuk reportbucket EC2. Selamat!
+
+Kesimpulan
+ Anda telah berhasil mempelajari cara:
+
+Membuat bucket di Amazon S3
+Menambahkan objek ke bucket Anda
+Mengelola izin akses pada suatu objek
+Membuat kebijakan bucket
+Menggunakan versioning bucket
+Mengakhiri Lab
+Ikuti langkah-langkah ini untuk menutup konsol dan mengakhiri lab Anda.
+
+Kembali ke AWS Management Console.
+
+Pada bilah navigasi, klik AWSLabsUser, lalu klik Sign Out (Keluar).

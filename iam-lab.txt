@@ -1,0 +1,253 @@
+Tugas 1: Jelajahi Pengguna dan Grup.
+Dalam tugas ini, Anda akan menjelajahi Pengguna dan Grup yang telah dibuat untuk Anda di IAM.
+
+Di Konsol Manajemen AWS, pada menu Services (Layanan), klik IAM.
+
+Di panel navigasi di sebelah kiri, klik Users (Pengguna).
+
+Pengguna IAM berikut telah dibuat untuk Anda:
+
+pengguna-1
+pengguna-2
+pengguna-3
+Klik user-1.
+Ini akan membawa Anda ke halaman ringkasan untuk pengguna-1. Tab Izin akan ditampilkan.
+
+Perhatikan bahwa pengguna-1 tidak memiliki izin apa pun.
+
+Klik tab Groups (Grup).
+
+pengguna-1 juga bukan anggota dari grup mana pun.
+
+Klik tab Security credentials (Kredensial keamanan).
+pengguna-1 diberikan Console password (kata sandi Konsol)
+
+pengguna-1 diberikan Groups (Grup).
+Grup berikut telah dibuat untuk Anda:
+
+EC2-Admin
+Dukungan-EC2
+Dukungan-S3
+Klik grup EC2-Support (Dukungan-EC2).
+Ini akan membawa Anda ke halaman ringkasan untuk grup EC2-Support (Dukungan-EC2).
+
+Klik tab Permissions (Izin).
+Grup ini memiliki Kebijakan yang Dikelola terkait dengan itu, yang disebut AmazonEC2ReadOnlyAccess. Kebijakan yang Dikelola adalah kebijakan yang dibangun sebelumnya (yang dibangun oleh AWS atau oleh administrator) yang dapat dipasangkan ke IAM Pengguna dan Grup. Saat kebijakan tersebut diperbarui, perubahan kebijakan akan segera berlaku terhadap semua Pengguna dan Grup yang dipasangkan pada kebijakan.
+
+Di Bawah Actions (Tindakan), klik tautan Show Policy (Tampilkan Kebijakan).
+Sebuah kebijakan mendefinisikan tindakan apa yang diperbolehkan atau ditolak untuk sumber daya AWS tertentu. Kebijakan ini memberikan izin untuk Mencantumkan dan Menguraikan informasi mengenai EC2, Elastic Load Balancing, CloudWatch, dan Auto Scaling. Kemampuan untuk melihat sumber daya, tetapi tidak memodifikasinya, sangat ideal untuk menetapkan peran Dukungan.
+
+Struktur dasar pernyataan dalam Kebijakan IAM adalah:
+
+Effect (Efek) mengatakan apakah akan Mengizinkan atau Menolak izin.
+Action (Tindakan) menentukan panggilan API yang dapat dilakukan terhadap Layanan AWS (misalnya, cloudwatch:ListMetrics).
+Resource (Sumber Daya) mendefinisikan ruang lingkup entitas yang dicakup oleh aturan kebijakan (misalnya, bucket Amazon S3 tertentu atau instans Amazon EC2, atau * yang berarti sumber daya apa pun).
+Tutup jendela Show Policy (Tampilkan Kebijakan).
+
+pengguna-1 diberikan Groups (Grup).
+
+Klik grup S3-Support (Dukungan-S3).
+
+Grup S3-Dukungan memiliki kebijakan AmazonS3ReadOnlyAccess yang terpasang.
+
+Di bawah menu Actions (Tindakan), klik tautan Show Policy (Tampilkan Kebijakan).
+Kebijakan ini memiliki izin Mendapatkan dan Mencantumkan sumber daya di Amazon S3.
+
+Tutup jendela Show Policy (Tampilkan Kebijakan).
+
+pengguna-1 diberikan Groups (Grup).
+
+Klik grup EC2-Admin.
+
+Grup ini sedikit berbeda dari dua lainnya. Sebagai ganti Managed Policy (Kebijakan yang Dikelola), grup ini memiliki Inline Policy (Kebijakan Inline), yang merupakan kebijakan yang ditetapkan ke satu Pengguna atau Grup saja. Kebijakan Inline biasanya digunakan untuk menerapkan izin untuk situasi yang hanya akan terjadi sekali.
+
+Di bawah Actions (Tindakan), klik Edit Policy (Edit Kebijakan) untuk melihat kebijakan.
+Kebijakan ini memberikan izin untuk melihat (Menguraikan) informasi tentang Amazon EC2 serta kemampuan untuk Memulai dan Menghentikan instans.
+
+Di bagian bawah layar, klik Cancel (Batal) untuk menutup kebijakan.
+Skenario Bisnis
+Untuk sisa lab ini, Anda akan bekerja sama dengan Pengguna dan Grup ini untuk mengaktifkan izin yang mendukung skenario bisnis berikut:
+
+Perusahaan Anda sedang mengembangkan penggunaan Amazon Web Services-nya, serta menggunakan banyak Amazon EC2 instance dan penyimpanan Amazon S3 dalam jumlah besar. Anda ingin memberikan akses ke staf baru, tergantung fungsi tugas mereka:
+
+Pengguna	Dalam Grup	Izin
+pengguna-1	Dukungan-S3	Akses Hanya Baca ke Amazon S3
+pengguna-2	EC2-Dukungan	Akses Hanya Baca ke Amazon EC2
+pengguna-3	EC2-Admin	Lihat, Mulai, dan Hentikan instans Amazon EC2
+Tugas 2: Tambahkan Pengguna ke Grup.
+Anda baru-baru ini merekrut user-1 (pengguna-1) sebagai penyedia dukungan untuk Amazon S3. Anda akan menambahkan mereka ke grup S3-Support (S3-Dukungan) sehingga mereka mewarisi izin yang diperlukan melalui kebijakan AmazonS3ReadOnlyAccess yang terpasang.
+
+ Anda dapat mengabaikan kesalahan “tidak diotorisasi” yang muncul selama tugas ini. Hal ini disebabkan oleh akun lab Anda yang memiliki izin terbatas dan tidak akan memengaruhi kemampuan Anda untuk menyelesaikan lab.
+
+TAMBAHKAN PENGGUNA-1 KE GRUP DUKUNGAN-S3
+Di panel navigasi kiri, klik Groups (Grup).
+
+Klik grup S3-Support (Dukungan-S3).
+
+Klik tab Users (Pengguna).
+
+Di tab Users (Pengguna), klik Add Users to Group (Tambahkan Pengguna ke Grup).
+
+Di jendela Add Users to Group (Tambahkan Pengguna ke Grup), konfigurasikan hal berikut:
+
+Pilih  user-1 (pengguna-1).
+Di bagian bawah layar, klik Add Users (Tambahkan Pengguna).
+ Di tab Users (Pengguna), Anda akan melihat bahwauser-1 (pengguna-1) telah ditambahkan ke grup.
+
+TAMBAHKAN PENGGUNA-2 KE GRUP DUKUNGAN-EC2
+ Anda merekrut user-2 (pengguna-2) sebagai penyedia dukungan untuk Amazon EC2.
+
+Menggunakan langkah-langkah yang sama dengan yang di atas, tambahkan user-2 (pengguna-2) ke grup EC2-Support (EC2-Dukungan).
+ user-2 (pengguna-2) seharusnya kini menjadi bagian dari grup EC2-Support (EC2-Dukungan).
+
+TAMBAHKAN PENGGUNA-3 KE GRUP EC2-ADMIN
+ Anda merekrut user-3 (pengguna-3) sebagai administrator Amazon EC2 Anda, yang mengelola instans EC2 Anda.
+
+Menggunakan langkah-langkah yang sama dengan yang di atas, tambahkan user-3 (pengguna-3) ke grup EC2-Admin (EC2-Admin).
+ user-3 (pengguna-3) seharusnya kini menjadi bagian dari grup EC2-Admin (EC2-Admin).
+
+pengguna-1 diberikan Groups (Grup).
+Setiap grup seharusnya memiliki 1 di kolom Users (Pengguna) untuk jumlah Pengguna di setiap Grup.
+
+Jika Anda tidak memiliki 1 di samping masing-masing grup, lihat lagi instruksi di atas untuk memastikan bahwa setiap pengguna ditetapkan ke Grup, seperti yang ditunjukkan dalam tabel di bagian Skenario Bisnis.
+
+Tugas 3: Masuk dan Uji Pengguna
+Dalam tugas ini, Anda akan menguji izin dari setiap Pengguna IAM.
+
+Di panel navigasi di sebelah kiri, klik Dashboard (Dasbor).
+Sebuah tautan masuk pengguna IAM yang ditampilkan akan terlihat seperti: https://123456789012.signin.aws.amazon.com/console
+
+Tautan ini dapat digunakan untuk masuk ke Akun AWS yang saat ini Anda gunakan.
+
+Salin tautan masuk pengguna IAM ke editor teks.
+
+Buka jendela pribadi.
+
+Mozilla Firefox
+
+Klik bilah menu  di bagian kanan atas layar
+Pilih New Private Window (Jendela Pribadi Baru)
+Google Chrome
+
+Klik titik tiga  di bagian kanan atas layar
+Klik New incognito window (Jendela penyamaran baru)
+Microsoft Edge
+
+Klik titik tiga  di bagian kanan atas layar
+Klik New InPrivate window (Jendela InPrivate Baru)
+Microsoft Internet Explorer
+
+Klik opsi menu Tools (Alat)
+Klik InPrivate Browsing (Penjelajahan InPrivate)
+Tempelkan tautan masuk pengguna IAM ke jendela pribadi Anda dan tekan Enter (Masuk).
+Sekarang Anda akan masuk sebagai user-1, (pengguna-1), yang telah direkrut sebagai staf dukungan penyimpanan Amazon S3 Anda.
+
+Masuk dengan:
+IAM user name: (Nama pengguna IAM) 
+user-1
+ (pengguna-1)
+Password: (Kata Sandi) Tempelkan nilaiAdministratorPassword lyang terletak di sebelah kiri instruksi ini.
+Di menu Services (Layanan), klik S3.
+
+Klik bucket yang memiliki s3bucket dalam namanya.
+
+Nama bucket S3 Anda juga terletak di sebelah kiri instruksi ini. Sebuah bucket bernama awslabs-resources mungkin juga ada bersama dengan kesalahan. Catatan: Ini normal. Anda tidak memiliki akses ke bucket ini.
+
+Karena pengguna Anda adalah bagian dari Grup S3-Support (S3-Dukungan) di IAM, mereka memiliki izin untuk melihat daftar bucket Amazon S3 dan konten s3bucket.
+
+Sekarang, uji apakah mereka memiliki akses ke Amazon EC2.
+
+Di menu Services(Layanan), klik EC2.
+
+Arahkan ke wilayah tempat lab Anda diluncurkan dengan:
+
+Mengeklik  panah tarik-turun di bagian atas layar, di sebelah kiri Dukungan
+Memilih nilai wilayah yang cocok dengan nilai Wilayah di sebelah kiri instruksi ini
+Di panel navigasi kiri, klik Instance (Instans).
+Anda tidak dapat melihat instans apa pun. Hal ini dikarenakan pengguna Anda belum ditetapkan izin untuk menggunakan Amazon EC2.
+
+Sekarang Anda akan masuk sebagai user-2, (pengguna-2), yang telah direkrut sebagai staf dukungan Amazon EC2 Anda.
+
+Keluar pengguna-1 Konsol Manajemen AWS (Konsol Manajemen AWS) dengan mengonfigurasi hal berikut:
+Di bagian atas layar, klik user-1 (pengguna-1)
+Klik Sign Out (Keluar)
+Tempelkan tautan masuk pengguna IAM ke jendela pribadi Anda dan tekan Enter (Masuk).
+Tautan ini seharusnya ada di editor teks Anda.
+
+Masuk dengan:
+IAM user name (Nama pengguna IAM): 
+user-2
+ (pengguna-2)
+Password (Kata Sandi): Tempelkan nilaiAdministratorPassword lyang terletak di sebelah kiri instruksi ini.
+Di menu Services (Layanan), klik EC2.
+ Di bagian kanan atas layar, aktifkan New EC2 Experience dengan beralih tombol, jika tidak diaktifkan secara default.
+
+Arahkan ke wilayah tempat lab Anda diluncurkan dengan:
+Mengeklik  panah tarik-turun di bagian atas layar, di sebelah kiri Dukungan
+Memilih nilai wilayah yang cocok dengan nilai Wilayah di sebelah kiri instruksi ini
+Di panel navigasi di sebelah kiri, klik Instances (Instans).
+Anda sekarang dapat melihat instans Amazon EC2 karena Anda memiliki izin Hanya Baca. Namun, Anda tidak akan dapat membuat perubahan ke sumber daya Amazon EC2.
+
+Instans EC2 Anda harus dipilih  Jika tidak dipilih, pilih  tersebut.
+
+Di menu Instance state (Status instans), klik Stop instance (Hentikan instans).
+
+Di jendela Stop instance (Hentikan instans), klik Stop (Hentikan).
+
+ Anda akan menerima pesan kesalahan yang menyatakan You are not authorized to perform this operation (Anda tidak diotorisasi untuk melakukan operasi ini). Ini menunjukkan bahwa kebijakan hanya memungkinkan Anda untuk melihat informasi, tanpa membuat perubahan.
+
+Tutup pesan kesalahan yang ditampilkan.
+Selanjutnya, periksa apakah pengguna-2 dapat mengakses Amazon S3.
+Di Services (Layanan), klik S3.
+Anda akan menerima  Error Access Denied (Kesalahan Akses Ditolak) karena pengguna-2 tidak mengizinkan menggunakan Amazon S3.
+Sekarang Anda akan masuk sebagai user-3 (pengguna-3), yang telah direkrut sebagai administrator Amazon EC2 Anda.
+Keluarkan pengguna-2 dari Konsol Manajemen AWS (Konsol Manajemen AWS) dengan mengonfigurasi hal berikut:
+
+Di bagian atas layar, klik user-2 (pengguna-2)
+
+Klik Sign Out (Keluar)
+
+Tempelkan tautan masuk pengguna IAM ke jendela pribadi Anda dan tekan Enter (Masuk).
+
+Tempelkan tautan masuk ke bilah alamat browser web Anda lagi. Jika tidak ada di clipboard Anda, ambil dari editor teks tempat Anda menyimpannya sebelumnya.
+
+Masuk dengan:
+
+IAM user name (Nama pengguna IAM): 
+user-3
+ (pengguna-3)
+Password (Kata Sandi): Tempelkan nilai AdministratorPassword lyang terletak di sebelah kiri instruksi ini.
+Di menu Services (Layanan), klik EC2.
+
+Arahkan ke wilayah tempat lab Anda diluncurkan dengan:
+
+Mengeklik  panah tarik-turun di bagian atas layar, di sebelah kiri Dukungan
+Memilih nilai wilayah yang cocok dengan nilai Wilayah di sebelah kiri instruksi ini
+Di panel navigasi di sebelah kiri, klik Instances (Instans).
+Sebagai Administrator EC2, Anda sekarang seharusnya memiliki izin untuk menghentikan Amazon EC2 instance.
+
+EC2 instance Anda seharusnya dipilih . Jika tidak, pilih.
+
+Di menu Instance state (Status instans), klik Stop instance (Hentikan instans).
+
+Di jendela Stop Instance (Hentikan Instans), Klik Stop (Hentikan).
+
+Instans akan memasuki keadaan berhenti dan akan mati.
+Tutup jendela pribadi Anda.
+Mengakhiri Lab
+Ikuti langkah-langkah ini untuk menutup konsol dan mengakhiri lab Anda.
+
+Kembali ke AWS Management Console.
+
+Pada bilah navigasi, klik AWSLabsUser, lalu klik Sign Out (Keluar).
+
+Klik Akhiri lab lalu konfirmasikan bahwa Anda ingin mengakhiri lab Anda.
+
+Kesimpulan
+ Selamat! Anda berhasil:
+
+Menjelajahi pengguna dan grup IAM yang telah dibuat sebelumnya
+Memeriksa kebijakan IAM sebagaimana diterapkan pada grup yang telah dibuat sebelumnya
+Mengikuti skenario dunia nyata, menambahkan pengguna ke grup dengan kemampuan tertentu diaktifkan
+Menemukan dan menggunakan URL masuk IAM
+Bereksperimen dengan efek kebijakan pada akses layanan
